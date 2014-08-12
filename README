@@ -1,0 +1,8 @@
+building swig by hand involved
+
+swig3.0 -Isrc/main/include/ -outcurrentdir -outdir target/main/java/test -package test -c++ -java src/main/swig/Tester.i 
+g++ -fPIC -Isrc/main/include  -I/usr/lib/jvm/java-7-oracle/include -I /usr/lib/jvm/java-7-oracle/include/linux -c Tester_wrap.cxx 
+g++ -fPIC -c -I src/main/include/ src/main/c++/Tester.cpp 
+g++ -shared  Tester_wrap.o Tester.o -o libtester.so
+
+
