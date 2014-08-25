@@ -5,7 +5,8 @@ DESTDIR = generated
 
 
 SWIG = swig3.0
-SWIGOPT = -c++ -java
+JAVA_PKG = tester
+SWIGOPT = -c++ -java -package $(JAVA_PKG) -outdir $(DESTDIR)/$(JAVA_PKG)
 JAVAINC = -I/usr/lib/jvm/java-7-oracle/include -I/usr/lib/jvm/java-7-oracle/include/linux
 PROJINC = -Isrc/main/include
 CXXINC = $(JAVAINC) $(PROJINC)
@@ -15,14 +16,15 @@ CXXFLAGS = -fPIC $(PROJINC) $(JAVAINC)
 
 VPATH = src/main/swig:src/main/include:src/main/c++
 
-all: libtester.so
+all: $(DESTDIR)/libtester.so
 
-libtester.so : $(DESTDIR)/Tester.o $(DESTDIR)/$(MODULE)_wrap.o | $(DESTDIR)
+$(DESTDIR)/libtester.so : $(DESTDIR)/Tester.o $(DESTDIR)/$(MODULE)_wrap.o | $(DESTDIR)
 	$(LINK.cc) -shared $^ -o $@
 	
 
 $(DESTDIR):
 	mkdir $@
+	mkdir $@/$(JAVA_PKG)
 
 
 $(DESTDIR)/%.o: %.cpp | $(DESTDIR)
@@ -35,4 +37,3 @@ $(DESTDIR)/$(WRAPPER): $(INTERFACE) | $(DESTDIR)
 	
 clean:
 	rm -rf $(DESTDIR)
-	rm -f libtester.so

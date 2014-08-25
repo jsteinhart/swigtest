@@ -1,19 +1,115 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>swigtest</groupId>
-  <artifactId>swigtest</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source/>
-          <target/>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>swigtest</groupId>
+	<artifactId>swigtest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.compendium</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>generated</directory>
+				<includes>
+					<include>*.so</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>src/main/include</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source />
+					<target />
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<executions>
+					<execution><!-- make all in the Maven compile phase -->
+						<id>buildlib</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>make</executable>
+							<arguments>
+								<argument>all</argument>
+							</arguments>
+						</configuration>
+					</execution>
+					<execution><!-- Make clean in the Maven clean phase -->
+						<id>cleanlib</id>
+						<phase>clean</phase>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+						<configuration>
+							<executable>make</executable>
+							<arguments>
+								<argument>clean</argument>
+							</arguments>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<version>1.9</version>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>generated</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Export-Package></Export-Package>
+                        <Include-Resource>src/main/resources,generated/libtester.so</Include-Resource>
+                        <Bundle-NativeCode>libtester.so; osname=Linux; processor=i386; processor=amd64; processor=x86_64
+                                                    </Bundle-NativeCode>
+                        <!-- processor=x86; processor=i386 ,
+                                  jri.dll; osname=Win32; osname="Windows 7"; processor=x86
+                              </Bundle-NativeCode> -->
+<!--                         <Embed-Dependency>jriengine;inline=true</Embed-Dependency> -->
+						<Bundle-Activator>tester.Main</Bundle-Activator>
+                    </instructions>
+                </configuration>
+            </plugin>
+		</plugins>
+	</build>
 </project>
