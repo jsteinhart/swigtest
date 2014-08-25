@@ -23,7 +23,7 @@ public class Main implements BundleActivator {
 		t.printer();
 		
 		int num = t.rng();
-		context.println("RNG: " +num);
+		System.out.println("RNG: " +num);
 		
 		
 	}
