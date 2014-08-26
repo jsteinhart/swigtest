@@ -1,0 +1,37 @@
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+	xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0
+		http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+		http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0
+		http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
+
+<!-- <reference id="eventAdmin" interface="org.osgi.service.event.EventAdmin" availability="mandatory" /> -->
+
+<!-- <reference id="scheduler" interface="at.ac.ait.hbs.homer.core.scheduler.Scheduler" availability="mandatory" /> -->
+
+<!-- <reference id="dataAccess" interface="at.ac.ait.hbs.homer.core.common.DataAccess" availability="mandatory" /> -->
+
+<!-- <bean id="statusManager" class="eu.relaxedcare.bpr.overall.StatusManager" init-method="init"> -->
+<!--   <property name="eventAdmin" ref="eventAdmin"/> -->
+<!--   <property name="scheduler" ref="scheduler"/> -->
+<!--   <property name="dataAccess" ref="dataAccess"/> -->
+<!--   <property name="bundleContext" ref="blueprintBundleContext"/> -->
+<!-- </bean> -->
+
+<!-- <service ref="statusManager"> -->
+<!--   <interfaces> -->
+<!--     <value>org.osgi.service.event.EventHandler</value> -->
+<!--   </interfaces> -->
+<!--   <service-properties> -->
+<!--     <entry key="event.topics"> -->
+<!--       <array value-type="java.lang.String"> -->
+<!--         <value>eu/relaxedcare/event/call</value> -->
+<!--       </array> -->
+<!--     </entry> -->
+<!--   </service-properties> -->
+<!-- </service> -->
+
+
+
+</blueprint>
